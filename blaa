@@ -1,0 +1,219 @@
+mydata<-read.csv("DartPoints.csv",header = TRUE)
+attach(mydata)
+plot(mydata)
+#start by considering only numerical variables
+cor(mydata[sapply(mydata, is.numeric)], use="pairwise")
+plot(mydata[sapply(mydata, is.numeric)], use="pairwise")
+#check all variables 
+pairs(data)
+
+
+
+#testing categoric variables 
+anova_test = aov(Weight~Name, data = mydata)
+summary(anova_test)
+
+
+#testing categoric variables 
+anova_test2 = aov(Weight~Blade.Sh, data = mydata)
+summary(anova_test2)
+
+#testing categoric variables 
+anova_test3 = aov(Weight~mydata$Blade.Sh.new = ifelse(mydata$Blade.Sh=='S',1,0) Base.Sh, data = mydata)
+summary(anova_test3)
+
+#testing categoric variables 
+anova_test4 = aov(Weight~Should.Sh, data = mydata)
+summary(anova_test4)
+
+#testing categoric variables 
+anova_test5 = aov(Weight~Should.Or, data = mydata)
+summary(anova_test5)
+
+#testing categoric variables 
+anova_test6 = aov(Weight~Haft.Sh, data = mydata)
+summary(anova_test6)
+
+#testing categoric variables 
+anova_test7 = aov(Weight~Haft.Or, data = mydata)
+summary(anova_test7)
+
+
+#Testing for interaction between categoric and numeric variables 
+
+#Weight vs Length (Name)
+plot(Weight[Name == "Darl"], Length[Name == "Darl"], pch= "D" ,col = 2, xlab = "Length",ylab = "Weight")
+points(Weight[Name == "Ensor"], Length[Name == "Ensor"],pch= "E", col = 3)
+points(Weight[Name == "Pedernales"], Length[Name == "Pedernales"],pch= "P", col = 4)
+points(Weight[Name == "Travis"], Length[Name == "Travis"],pch= "T", col = 5)
+
+
+#Weight vs Length (Should.Or)
+plot(Weight[Should.Or == "T"], Length[Should.Or == "T"], pch= "T" ,col = 2, xlab = "Length",ylab = "Weight")
+points(Weight[Should.Or == "H"], Length[Should.Or == "H"],pch= "H", col = 3)
+points(Weight[Should.Or == "X"], Length[Should.Or== "X"],pch= "X", col = 4)
+points(Weight[Should.Or== "B"], Length[Should.Or == "B"],pch= "B", col = 5)
+
+#Weight vs Length (Haft.Or)
+plot(Weight[Haft.Or == "E"], Length[Haft.Or == "E"], pch= "E" ,col = 2, xlab = "Length",ylab = "Weight")
+points(Weight[Haft.Or == "C"], Length[Haft.Or == "C"],pch= "C", col = 3)
+points(Weight[Haft.Or == "P"], Length[Haft.Or== "P"],pch= "P", col = 4)
+points(Weight[Haft.Or== "V"], Length[Haft.Or == "V"],pch= "V", col = 5)
+points(Weight[Haft.Or== "T"], Length[Haft.Or == "T"],pch= "T", col = 6)
+
+
+
+
+
+#Testing for interaction between categoric and numeric variables 
+
+#Weight vs Thickness (Name)
+plot(Weight[Name == "Darl"], Thickness[Name == "Darl"], pch= "D" ,col = 2, xlab = "Thickness",ylab = "Weight")
+points(Weight[Name == "Ensor"], Thickness[Name == "Ensor"],pch= "E", col = 3)
+points(Weight[Name == "Pedernales"], Thickness[Name == "Pedernales"],pch= "P", col = 4)
+points(Weight[Name == "Travis"], Thickness[Name == "Travis"],pch= "T", col = 5)
+
+
+#Weight vs Thickness (Should.Or)
+plot(Weight[Should.Or == "T"], Thickness[Should.Or == "T"], pch= "T" ,col = 2, xlab = "Thickness",ylab = "Weight")
+points(Weight[Should.Or == "H"], Thickness[Should.Or == "H"],pch= "H", col = 3)
+points(Weight[Should.Or == "X"], Thickness[Should.Or== "X"],pch= "X", col = 4)
+points(Weight[Should.Or== "B"], Thickness[Should.Or == "B"],pch= "B", col = 5)
+
+#Weight vs Thickness (Haft.Or)
+plot(Weight[Haft.Or == "E"], Thickness[Haft.Or == "E"], pch= "E" ,col = 2, xlab = "Thickness",ylab = "Weight")
+points(Weight[Haft.Or == "C"], Thickness[Haft.Or == "C"],pch= "C", col = 3)
+points(Weight[Haft.Or == "P"], Thickness[Haft.Or== "P"],pch= "P", col = 4)
+points(Weight[Haft.Or== "V"], Thickness[Haft.Or == "V"],pch= "V", col = 5)
+points(Weight[Haft.Or== "T"], Thickness[Haft.Or == "T"],pch= "T", col = 6)
+lm_all<-lm(Weight~Length*Width + Width*Thickness  + Name_nop.n + Should.Or + Haft.Or
+)
+summary(lm_all)
+
+plot(lm_all)
+
+#testing categoric variables using linear regression 
+lm<-lm(Weight~Haft.Or, data = mydata)
+summary(lm) 
+
+#first model 
+
+lm_first = lm(Weight~ Length*Width + Width*Thickness + Name + Should.Or + Haft.Or, data = mydata)
+summary(lm_first)
+
+lm_2 = lm(Weight~ Length + Width + Thickness + Name + Should.Or + Haft.Or, data = mydata)
+summary(lm_2)
+
+lm_3 = lm(Weight~ Length + Width + Thickness + Name, data = mydata)
+summary(lm_3)
+
+lm_4 = lm(Weight~Width*Thickness, data = mydata)
+summary(lm_4)
+
+lm_5 = lm(Weight~Length, data = mydata)
+summary(lm_5)
+
+lm_6 = lm(Weight~Name, data = mydata)
+summary(lm_6)
+
+
+
+
+lm_7 = lm(Weight~Name, data = mydata)
+summary(lm_7)
+
+
+plot(lm_7)
+
+
+
+mydata$Blade.Sh.new<- 0
+
+mydata.df = mydata
+
+
+mydata$Blade.Sh.new = ifelse(mydata$Blade.Sh=='S',1,0) 
+mydata$Base.Sh.new = ifelse(mydata$Base.Sh=='S',1,0)
+mydata$Should.Sh.new = ifelse(mydata$Should.Sh=='S',1,0)
+mydata$Should.Or.new = ifelse(mydata$Should.Or=='H',1,0)
+mydata$Haft.Sh.new = ifelse(mydata$Haft.Sh=='S',1,0)
+mydata$Haft.Or.new = ifelse(mydata$Haft.Or=='S',1,0)
+
+mydata$Blade.Sh.new = as.factor(mydata$Blade.Sh.new)
+mydata$Base.Sh.new = as.factor(mydata$Base.Sh.new)
+mydata$Should.Sh.new = as.factor(mydata$Should.Sh.new)
+mydata$Should.Or.new = as.factor(mydata$Should.Or.new)
+mydata$Haft.Sh.new = as.factor(mydata$Haft.Sh.new)
+mydata$Haft.Or.new = as.factor(mydata$Haft.Or.new)
+
+
+
+attach(mydata)
+
+lm_8 = lm(Weight~Base.Sh.new, data = mydata)
+summary(lm_8)
+
+plot(Weight[Should.Or.new == 1], Thickness[Should.Or.new == 1], pch= "x" ,col = 2, xlab = "Thickness",ylab = "Weight")
+points(Weight[Should.Or.new == 0], Thickness[Should.Or.new == 0], pch= "x" ,col = 3)
+
+plot(Weight[Should.Or.new == 1], Length[Should.Or.new == 1], pch= "x" ,col = 2, xlab = "Length",ylab = "Weight")
+points(Weight[Should.Or.new == 0], Length[Should.Or.new == 0],pch= "x", col = 3)
+
+mydata$Blade.Sh <- NULL 
+mydata$Base.Sh <- NULL 
+mydata$Haft.Or<-NULL 
+
+
+
+plot(mydata)
+
+
+
+lm_final = lm(Weight~Name + Length*Thickness)
+summary(lm_final)
+anova(lm_final)
+
+anova_test8 = aov(Weight~Should.Or.new, data = mydata)
+summary(anova_test8)
+
+
+
+
+lm_all<-lm(Weight~Length*Width + Width*Thickness  + Name_nop.n + Should.Or + Haft.Or
+            )
+summary(lm_all)
+
+plot(lm_all)
+
+
+
+mydata$Name = is.factor(mydata$Name)
+
+mydata =subset(mydata,mydata$Name!='Pedernales')
+
+Per = ifelse(mydata$Name=='Pedernales',1,0)
+
+attach(mydata)
+
+lm_all<-lm(Weight~Length*Width + Width*Thickness+ Name  + Should.Or + Haft.Or
+)
+summary(lm_all)
+
+plot(lm_all)
+
+
+
+mydata$Pedernales = ifelse(mydata$Names=='Pedernales',1,0)
+
+df.test = ifelse(mydata$Name=='Pedernales',1,mydata$Name)
+
+Per = ifelse(mydata$Name=='Pedernales',1,0)
+Darl = ifelse(mydata$Name=='Darl',1,0)
+Ensor =ifelse(mydata$Name=='Ensor',1,0)
+Travis = ifelse(mydata$Name=='Travis',1,0)
+fake.df = cbind(Per,Darl,Ensor,Travis)
+X = c(1:91)
+fake.df2 = cbind(fake.df,mydata)
+
+lm_test = lm(Weight~Per + Length)
+
