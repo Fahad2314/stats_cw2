@@ -138,6 +138,9 @@ mydata$Should.Sh.new = ifelse(mydata$Should.Sh=='S',1,0)
 mydata$Should.Or.new = ifelse(mydata$Should.Or=='H',1,0)
 mydata$Haft.Sh.new = ifelse(mydata$Haft.Sh=='S',1,0)
 mydata$Haft.Or.new = ifelse(mydata$Haft.Or=='S',1,0)
+mydata$Name.Darl.new = ifelse(mydata$Name=='Darl',1,0)
+mydata$Name.Per.new = ifelse(mydata$Name=='Pedernales',1,0)
+
 
 mydata$Blade.Sh.new = as.factor(mydata$Blade.Sh.new)
 mydata$Base.Sh.new = as.factor(mydata$Base.Sh.new)
@@ -145,6 +148,8 @@ mydata$Should.Sh.new = as.factor(mydata$Should.Sh.new)
 mydata$Should.Or.new = as.factor(mydata$Should.Or.new)
 mydata$Haft.Sh.new = as.factor(mydata$Haft.Sh.new)
 mydata$Haft.Or.new = as.factor(mydata$Haft.Or.new)
+mydata$Name.Darl.new = as.factor(mydata$Name.Darl.new)
+mydata$Name.Per.new = as.factor(mydata$Name.Per.new)
 
 
 
@@ -217,3 +222,8 @@ fake.df2 = cbind(fake.df,mydata)
 
 lm_test = lm(Weight~Per + Length)
 
+attach(mydata) 
+
+
+lm_test = lm(Weight~ Length + Name.Per.new, data = mydata)
+summary(lm_test)
